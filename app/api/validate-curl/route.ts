@@ -29,12 +29,12 @@ export async function POST(request: NextRequest) {
 
 curl command: ${curlCommand}
 
-Respond in JSON format with:
+You must respond with ONLY a valid JSON object, no markdown formatting, no code blocks, no backticks. Just the raw JSON object with this exact structure:
 {
-  "isValid": boolean,
-  "issues": ["list of issues found"],
-  "suggestedFix": "corrected curl command if there are issues",
-  "explanation": "brief explanation of issues and fixes"
+  "isValid": true or false,
+  "issues": ["array of issue strings, empty if none"],
+  "suggestedFix": "corrected curl command string or null if valid",
+  "explanation": "brief explanation string"
 }
 
 Be strict about syntax, headers, URL format, and API best practices.`,
@@ -55,12 +55,16 @@ Be strict about syntax, headers, URL format, and API best practices.`,
     }
 
     const data = await response.json()
-    const content = data.choices[0].message.content
+    let content = data.choices[0].message.content
 
     try {
+      // Clean up the response - remove markdown code blocks if present
+      content = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()
+      
       const result = JSON.parse(content)
       return NextResponse.json(result)
-    } catch {
+    } catch (parseError) {
+      console.error("[v0] Failed to parse JSON:", content)
       return NextResponse.json({
         isValid: false,
         issues: ["Unable to parse validation response"],
