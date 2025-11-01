@@ -11,7 +11,11 @@ export const metadata: Metadata = {
   description: "Test and debug API requests with AJ STUDIOZ - the professional online curl command testing platform",
   generator: "v0.app",
   icons: {
-    icon: "/favicon.png",
+    icon: {
+      url: "/favicon.png",
+      type: "image/png",
+      sizes: "any",
+    },
     apple: "/favicon.png",
   },
 }

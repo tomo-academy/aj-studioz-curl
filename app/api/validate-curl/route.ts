@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "mixtral-8x7b-32768",
+        model: "groq/mixtral-8x7b-32768",
         messages: [
           {
             role: "user",
@@ -61,7 +61,6 @@ Be strict about syntax, headers, URL format, and API best practices.`,
       const result = JSON.parse(content)
       return NextResponse.json(result)
     } catch {
-      // If response isn't JSON, return a parsed validation
       return NextResponse.json({
         isValid: false,
         issues: ["Unable to parse validation response"],
