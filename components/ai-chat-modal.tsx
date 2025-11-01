@@ -23,7 +23,7 @@ export default function AiChatModal({ isOpen, onClose }: AiChatModalProps) {
       id: "1",
       role: "assistant",
       content:
-        "Hi! I'm your AI assistant for AJ STUDIOZ. I can help you with:\n• Writing and fixing curl commands\n• Explaining API endpoints\n• Providing example requests\n• Answering questions about models and APIs\n• Debugging REST API issues\n\nWhat would you like help with?",
+        "Hi! I'm your AI assistant for AJ STUDIOZ cURL Tester. I can help you with:\n\n• Writing and fixing curl commands\n• Explaining API endpoints and methods\n• Providing example requests for popular APIs\n• Answering questions about HTTP methods, headers, and authentication\n• Giving you up-to-date information about API models and services\n• Debugging REST API issues\n• Converting between different request formats\n\nWhat would you like help with today?",
       timestamp: Date.now(),
     },
   ])
@@ -158,14 +158,14 @@ export default function AiChatModal({ isOpen, onClose }: AiChatModalProps) {
 
         {/* Input */}
         <div className="p-4 border-t border-border bg-background rounded-b-lg">
-          <div className="flex gap-2">
-            <input
-              type="text"
+          <div className="flex gap-2 items-end">
+            <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              placeholder="Ask me anything about APIs, curl, models..."
-              className="flex-1 px-3 py-2 bg-input border border-border rounded text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+              onKeyPress={(e) => e.key === "Enter" && !e.shiftKey && handleSendMessage()}
+              placeholder="Ask me about APIs, curl commands, HTTP methods, authentication..."
+              className="flex-1 px-3 py-2 bg-input border border-border rounded text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm resize-none"
+              rows={1}
               disabled={isLoading}
             />
             <Button
@@ -177,6 +177,9 @@ export default function AiChatModal({ isOpen, onClose }: AiChatModalProps) {
               <Send className="w-4 h-4" />
             </Button>
           </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            💡 Tip: Ask about popular APIs like OpenAI, Anthropic, GitHub, Stripe, or get help with curl syntax
+          </p>
         </div>
       </Card>
     </div>
