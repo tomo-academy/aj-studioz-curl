@@ -16,6 +16,7 @@ export default function Home() {
     headers: Record<string, string>
   } | null>(null)
   const [curlCommand, setCurlCommand] = useState("")
+  const [mobileView, setMobileView] = useState<'curl' | 'response'>('curl')
 
   const handleSelectHistory = (curl: string) => {
     setCurlCommand(curl)
@@ -30,15 +31,42 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen w-screen bg-background text-foreground overflow-hidden">
       <Header />
+      {/* Mobile Toggle Buttons */}
+      <div className="lg:hidden flex border-b border-border bg-card">
+        <button
+          onClick={() => setMobileView('curl')}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            mobileView === 'curl'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          cURL Preview
+        </button>
+        <button
+          onClick={() => setMobileView('response')}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            mobileView === 'response'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Response
+        </button>
+      </div>
+
       {/* Main Content - Responsive split layout */}
       <div className="flex flex-1 overflow-hidden bg-background">
         <HistorySidebar onSelectHistory={handleSelectHistory} />
 
         {/* Left Panel - Curl Input */}
-        <div className="w-full lg:w-1/2 flex flex-col border-r border-border overflow-hidden">
+        <div className={`${
+          mobileView === 'curl' ? 'flex' : 'hidden'
+        } lg:flex w-full lg:w-1/2 flex-col border-r border-border overflow-hidden`}>
           <CurlExecutor
             onResponse={(data) => {
               setResponse(data)
+              setMobileView('response') // Auto-switch to response on mobile
               if (window && (window as any).addCurlToHistory) {
                 const parsed = document.querySelector("textarea")?.value || ""
                 const url = requestData?.url || "unknown"
@@ -53,7 +81,9 @@ export default function Home() {
         </div>
 
         {/* Right Panel - Response Viewer */}
-        <div className="w-full lg:w-1/2 flex flex-col border-t lg:border-t-0 border-border overflow-hidden bg-card/30">
+        <div className={`${
+          mobileView === 'response' ? 'flex' : 'hidden'
+        } lg:flex w-full lg:w-1/2 flex-col border-t lg:border-t-0 border-border overflow-hidden bg-card/30`}>
           <ResponseViewerNew response={response} isLoading={isLoading} requestData={requestData} />
         </div>
       </div>
