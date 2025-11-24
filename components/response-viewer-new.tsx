@@ -119,6 +119,9 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
             <TabsTrigger value="timing" className="text-xs sm:text-sm">
               Timing
             </TabsTrigger>
+            <TabsTrigger value="ai-response" className="text-xs sm:text-sm text-red-500">
+              AI's Response
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="content" className="flex-1 overflow-hidden mt-0 p-0">
@@ -158,6 +161,20 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
                 <p className="text-muted-foreground text-xs pt-2">
                   Detailed timing metrics not available in browser environment. Use curl with -w flag for detailed
                   timing.
+                </p>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="ai-response" className="flex-1 overflow-hidden mt-0 p-0">
+            <div className="p-3 sm:p-4 h-full overflow-y-auto">
+              <p className="text-xs font-semibold text-red-500 mb-3">AI's Response</p>
+              <div className="bg-input p-3 rounded">
+                <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                  {response.data?.choices?.[0]?.message?.content || 
+                   response.data?.message?.content ||
+                   response.data?.content ||
+                   (typeof response.data === 'string' && response.data.includes('message') ? response.data : 'No AI response detected in this response')}
                 </p>
               </div>
             </div>
