@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/aj-logo.png",
+        url: "/favicon.png",
         type: "image/png",
-        sizes: "any",
+        sizes: "32x32",
       },
     ],
-    apple: "/aj-logo.png",
-    shortcut: "/aj-logo.png",
+    apple: "/favicon.png",
+    shortcut: "/favicon.png",
   },
 }
 
@@ -32,8 +32,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="icon" href="/aj-logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/aj-logo.png" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <style>
           {`
             /* Make favicon appear circular */
