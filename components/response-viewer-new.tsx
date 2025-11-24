@@ -169,13 +169,87 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
           <TabsContent value="ai-response" className="flex-1 overflow-hidden mt-0 p-0">
             <div className="p-3 sm:p-4 h-full overflow-y-auto">
               <p className="text-xs font-semibold text-red-500 mb-3">AI's Response</p>
-              <div className="bg-input p-3 rounded">
-                <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
-                  {response.data?.choices?.[0]?.message?.content || 
-                   response.data?.message?.content ||
-                   response.data?.content ||
-                   (typeof response.data === 'string' && response.data.includes('message') ? response.data : 'No AI response detected in this response')}
-                </p>
+              <div className="bg-input p-3 rounded space-y-3">
+                {(() => {
+                  // Try multiple paths to find AI response
+                  const data = response.data
+                  
+                  // Check output array structure (OpenRouter/Groq extended format)
+                  if (data?.output && Array.isArray(data.output)) {
+                    const messages = data.output
+                      .filter((item: any) => item.type === 'message' || item.type === 'reasoning')
+                      .map((item: any) => {
+                        if (item.type === 'reasoning' && item.content?.[0]?.text) {
+                          return {
+                            type: 'reasoning',
+                            text: item.content[0].text
+                          }
+                        }
+                        if (item.type === 'message' && item.content?.[0]?.text) {
+                          return {
+                            type: 'message',
+                            text: item.content[0].text
+                          }
+                        }
+                        return null
+                      })
+                      .filter(Boolean)
+                    
+                    if (messages.length > 0) {
+                      return messages.map((msg: any, idx: number) => (
+                        <div key={idx}>
+                          <p className="text-xs font-semibold text-red-400 mb-1">
+                            {msg.type === 'reasoning' ? '🧠 Reasoning:' : '💬 Message:'}
+                          </p>
+                          <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                            {msg.text}
+                          </p>
+                        </div>
+                      ))
+                    }
+                  }
+                  
+                  // Standard OpenAI format
+                  if (data?.choices?.[0]?.message?.content) {
+                    return (
+                      <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                        {data.choices[0].message.content}
+                      </p>
+                    )
+                  }
+                  
+                  // Anthropic format
+                  if (data?.content?.[0]?.text) {
+                    return (
+                      <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                        {data.content[0].text}
+                      </p>
+                    )
+                  }
+                  
+                  // Generic message/content fields
+                  if (data?.message?.content) {
+                    return (
+                      <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                        {data.message.content}
+                      </p>
+                    )
+                  }
+                  
+                  if (data?.content && typeof data.content === 'string') {
+                    return (
+                      <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                        {data.content}
+                      </p>
+                    )
+                  }
+                  
+                  return (
+                    <p className="text-xs text-red-500 font-mono whitespace-pre-wrap break-words">
+                      No AI response detected in this response
+                    </p>
+                  )
+                })()}
               </div>
             </div>
           </TabsContent>
