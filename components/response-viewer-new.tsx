@@ -77,7 +77,7 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
 
   return (
     <div className="flex-1 flex flex-col bg-card overflow-hidden min-h-0 p-2">
-      <div className="flex-1 flex flex-col border-2 border-white rounded-lg overflow-hidden">
+      <div className="flex-1 flex flex-col border-2 border-white/40 rounded-lg overflow-hidden">
       {/* Top Status Bar - Always Visible */}
       <div className="flex-shrink-0 border-b border-border p-3 sm:p-4 flex items-center justify-between bg-secondary/30">
         <div className="flex items-center gap-3">
@@ -134,7 +134,7 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
                   {copied ? "Copied" : "Copy"}
                 </Button>
               </div>
-              <pre className="bg-input p-2 sm:p-3 rounded text-xs text-foreground font-mono whitespace-pre-wrap break-words flex-1 overflow-auto border-2 border-yellow-500">
+              <pre className="bg-input p-2 sm:p-3 rounded text-xs text-foreground font-mono whitespace-pre-wrap break-words flex-1 overflow-auto border-2 border-yellow-500/40">
                 {typeof response.data === "string" ? response.data : JSON.stringify(response.data, null, 2)}
               </pre>
             </div>
@@ -143,7 +143,7 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
           <TabsContent value="headers" className="flex-1 overflow-hidden mt-0 p-0">
             <div className="p-3 sm:p-4 h-full overflow-y-auto">
               <p className="text-xs font-semibold text-muted-foreground mb-2">Response Headers</p>
-              <pre className="bg-input p-2 sm:p-3 rounded text-xs text-muted-foreground font-mono whitespace-pre-wrap break-words border-2 border-yellow-500">
+              <pre className="bg-input p-2 sm:p-3 rounded text-xs text-muted-foreground font-mono whitespace-pre-wrap break-words border-2 border-yellow-500/40">
                 {Object.entries(response.headers || {})
                   .map(([key, value]) => `${key}: ${value}`)
                   .join("\n")}
@@ -155,7 +155,7 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
             <div className="p-3 sm:p-4 h-full overflow-y-auto space-y-2">
               <p className="text-xs font-semibold text-muted-foreground mb-3">Request Timing</p>
               <div className="space-y-1 text-xs">
-                <div className="flex justify-between bg-input p-2 rounded border-2 border-yellow-500">
+                <div className="flex justify-between bg-input p-2 rounded border-2 border-yellow-500/40">
                   <span className="text-muted-foreground">Total Time:</span>
                   <span className="text-foreground font-semibold">{response.time || "N/A"}</span>
                 </div>
@@ -170,7 +170,7 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
           <TabsContent value="ai-response" className="flex-1 overflow-hidden mt-0 p-0">
             <div className="p-3 sm:p-4 h-full overflow-y-auto">
               <p className="text-xs font-semibold text-red-500 mb-3">AI's Response</p>
-              <div className="bg-input p-3 rounded space-y-3 border-2 border-yellow-500">
+              <div className="bg-input p-3 rounded space-y-3 border-2 border-yellow-500/40">
                 {(() => {
                   // Try multiple paths to find AI response
                   const data = response.data

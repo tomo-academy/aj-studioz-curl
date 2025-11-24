@@ -88,7 +88,7 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
   return (
     <div className="flex-1 flex flex-col overflow-hidden p-2">
       {/* cURL Input Area */}
-      <div className="flex-1 overflow-hidden flex flex-col border-2 border-white rounded-lg">
+      <div className="flex-1 overflow-hidden flex flex-col border-2 border-white/40 rounded-lg">
         <div className="p-3 sm:p-4 border-b border-border bg-card flex items-center justify-between">
           <label className="text-xs font-semibold text-muted-foreground">cURL Preview</label>
           <div className="flex gap-2">
@@ -113,7 +113,7 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
             value={curlCommand}
             onChange={(e) => handleCurlInput(e.target.value)}
             placeholder="curl -X GET https://api.example.com"
-            className="w-full h-full p-3 sm:p-4 bg-input border-2 border-yellow-500 rounded text-foreground placeholder-muted-foreground text-xs sm:text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            className="w-full h-full p-3 sm:p-4 bg-input border-2 border-yellow-500/40 rounded text-foreground placeholder-muted-foreground text-xs sm:text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500/60"
           />
           {parseError && <p className="text-xs text-destructive mt-2">{parseError}</p>}
         </div>
