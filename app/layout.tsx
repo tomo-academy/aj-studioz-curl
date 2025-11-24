@@ -43,7 +43,7 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body className={`font-sans antialiased`}>{children}</body>
+      <body className={`font-sans antialiased overflow-hidden h-screen`}>{children}</body>
     </html>
   )
 }

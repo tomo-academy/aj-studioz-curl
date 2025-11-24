@@ -29,7 +29,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-background text-foreground overflow-hidden">
+    <div className="flex flex-col h-screen w-screen bg-background text-foreground overflow-hidden fixed inset-0">
       <Header />
       {/* Mobile Toggle Buttons */}
       <div className="lg:hidden flex border-b border-border bg-card">
@@ -56,13 +56,13 @@ export default function Home() {
       </div>
 
       {/* Main Content - Responsive split layout */}
-      <div className="flex flex-1 overflow-hidden bg-background">
+      <div className="flex flex-1 overflow-hidden bg-background min-h-0">
         <HistorySidebar onSelectHistory={handleSelectHistory} />
 
         {/* Left Panel - Curl Input */}
         <div className={`${
           mobileView === 'curl' ? 'flex' : 'hidden'
-        } lg:flex w-full lg:w-1/2 flex-col border-r border-border overflow-hidden`}>
+        } lg:flex w-full lg:w-1/2 flex-col border-r border-border overflow-hidden min-h-0`}>
           <CurlExecutor
             onResponse={(data) => {
               setResponse(data)
