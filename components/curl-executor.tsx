@@ -1,11 +1,10 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Copy, Send, Sparkles } from "lucide-react"
+import { Copy, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { parseCurlCommand } from "@/lib/curl-parser-new"
-import CurlValidatorModal from "./curl-validator-modal"
 
 interface CurlExecutorProps {
   onResponse: (response: any) => void
@@ -20,7 +19,6 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
   )
   const [isLoading, setIsLoading] = useState(false)
   const [parseError, setParseError] = useState<string | null>(null)
-  const [showValidatorModal, setShowValidatorModal] = useState(false)
   const curlInputRef = useRef<HTMLTextAreaElement>(null)
 
   const handleCurlInput = (value: string) => {
@@ -121,15 +119,6 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
               Copy
             </Button>
             <Button
-              onClick={() => setShowValidatorModal(true)}
-              variant="outline"
-              size="sm"
-              className="gap-2 bg-transparent text-xs sm:text-sm border-yellow-600 text-yellow-500 hover:bg-yellow-500/10"
-            >
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
-              AI Check
-            </Button>
-            <Button
               onClick={handleExecute}
               disabled={isLoading}
               size="sm"
@@ -141,14 +130,6 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
           </div>
         </div>
       </div>
-
-      {/* AI Validator Modal */}
-      <CurlValidatorModal
-        curlCommand={curlCommand}
-        isOpen={showValidatorModal}
-        onClose={() => setShowValidatorModal(false)}
-        onAcceptSuggestion={(fixedCurl) => setCurlCommand(fixedCurl)}
-      />
     </div>
   )
 }
