@@ -87,33 +87,11 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      {/* cURL Preview Area - Top */}
-      <div className="flex-1 border-b border-border bg-card/50 overflow-hidden flex flex-col">
-        <div className="p-3 sm:p-4 border-b border-border bg-card">
+      {/* cURL Input Area */}
+      <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="p-3 sm:p-4 border-b border-border bg-card flex items-center justify-between">
           <label className="text-xs font-semibold text-muted-foreground">cURL Preview</label>
-        </div>
-        <div className="flex-1 overflow-y-auto p-3 sm:p-4">
-          <Card className="p-3 sm:p-4 bg-input border-border h-full">
-            <pre className="text-xs sm:text-sm text-accent font-mono overflow-x-auto whitespace-pre-wrap break-words">
-              {curlCommand}
-            </pre>
-          </Card>
-        </div>
-      </div>
-
-      {/* cURL Input Area - Bottom */}
-      <div className="p-3 sm:p-4 border-t border-border bg-card flex-shrink-0">
-        <label className="text-xs font-semibold text-muted-foreground mb-2 block">Enter your cURL command</label>
-        <div className="flex gap-2 flex-col">
-          <textarea
-            ref={curlInputRef}
-            value={curlCommand}
-            onChange={(e) => handleCurlInput(e.target.value)}
-            placeholder="curl -X GET https://api.example.com"
-            className="w-full min-h-20 sm:min-h-24 p-2 sm:p-3 bg-input border border-border rounded text-foreground placeholder-muted-foreground text-xs sm:text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-          {parseError && <p className="text-xs text-destructive">{parseError}</p>}
-          <div className="flex gap-2 flex-col sm:flex-row">
+          <div className="flex gap-2">
             <Button onClick={copyCurl} variant="outline" size="sm" className="gap-2 bg-transparent text-xs sm:text-sm">
               <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
               Copy
@@ -122,12 +100,22 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
               onClick={handleExecute}
               disabled={isLoading}
               size="sm"
-              className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground flex-1 sm:flex-none text-xs sm:text-sm"
+              className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground text-xs sm:text-sm"
             >
               <Send className="w-3 h-3 sm:w-4 sm:h-4" />
               {isLoading ? "Sending..." : "Send"}
             </Button>
           </div>
+        </div>
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4">
+          <textarea
+            ref={curlInputRef}
+            value={curlCommand}
+            onChange={(e) => handleCurlInput(e.target.value)}
+            placeholder="curl -X GET https://api.example.com"
+            className="w-full h-full p-3 sm:p-4 bg-input border border-border rounded text-foreground placeholder-muted-foreground text-xs sm:text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          {parseError && <p className="text-xs text-destructive mt-2">{parseError}</p>}
         </div>
       </div>
     </div>
