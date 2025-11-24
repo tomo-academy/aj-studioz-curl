@@ -76,7 +76,7 @@ export default function ResponseViewerNew({ response, isLoading, requestData }: 
   const apiProviderInfo = requestData ? detectAPIProvider(requestData.url, requestData.headers, response.data) : null
 
   return (
-    <div className="flex-1 flex flex-col bg-card border-t lg:border-t-0 lg:border-l border-border overflow-hidden min-h-0">
+    <div className="flex-1 flex flex-col bg-card border-t lg:border-t-0 lg:border-l border-border overflow-hidden min-h-0 lg:border-2 lg:border-white/20 lg:m-2 lg:rounded-lg">
       {/* Top Status Bar - Always Visible */}
       <div className="flex-shrink-0 border-b border-border p-3 sm:p-4 flex items-center justify-between bg-secondary/30">
         <div className="flex items-center gap-3">
