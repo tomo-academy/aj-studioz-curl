@@ -86,9 +86,9 @@ export default function CurlExecutor({ onResponse, onLoadingChange, onError, onR
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex-1 flex flex-col overflow-hidden p-2">
       {/* cURL Input Area */}
-      <div className="flex-1 overflow-hidden flex flex-col border-2 border-white/20 m-2 rounded-lg">
+      <div className="flex-1 overflow-hidden flex flex-col border-2 border-white rounded-lg">
         <div className="p-3 sm:p-4 border-b border-border bg-card flex items-center justify-between">
           <label className="text-xs font-semibold text-muted-foreground">cURL Preview</label>
           <div className="flex gap-2">
